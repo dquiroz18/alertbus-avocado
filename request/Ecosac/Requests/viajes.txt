@@ -1,0 +1,21 @@
+
+ </br> 
+************************************************************************************************************************************
+************************************************************************************************************************************
+<Agrego viajes ------>2020/05/05 _____ Tuesday a las 00:46
+==========================================================
+usuario={"codigo":"","id":1,"idViaje":0,"lastName":"","name":"HECTOR GULLERMO OCA\u00d1A","password":"123456","typeUser":0,"user":"hocana"}
+viajes=[{"capacidad":52,"comentario":"","conductor":"OCA\u00d1A MACHADO, HECTOR GULLERMO","hConfirmado":"2020-05-04 09:56:37","hFin":"2020-05-04 19:46:53","hInicio":"2020-05-04 09:56:37","hProgramada":"2020-05-04 10:00:00","id":10014,"idWeb":0,"numPasajerosRegistrados":0,"numRestriccionesRegistradas":0,"pasajeroVOList":[{"dni":"FF1544433600FF","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 12:38:11","id":10,"idViaje":10014,"name":"","observacion":""},{"dni":"FF0015444336FF","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 12:17:40","id":9,"idViaje":10014,"name":"","observacion":""},{"dni":"FF0015444359FF","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 12:17:22","id":8,"idViaje":10014,"name":"","observacion":""},{"dni":"FF0012974767FF","hBajada":"2020-05-04 19:30:04","hSubida":"2020-05-04 12:06:18","id":7,"idViaje":10014,"name":"","observacion":""},{"dni":"FF0005682458FF","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 11:46:18","id":6,"idViaje":10014,"name":"","observacion":""},{"dni":"04001544433605","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 10:00:41","id":4,"idViaje":10014,"name":"","observacion":""},{"dni":"0400154443590D","hBajada":"2020-05-04 19:46:53","hSubida":"2020-05-04 10:00:35","id":3,"idViaje":10014,"name":"","observacion":""},{"dni":"5D00056824580E","hBajada":"2020-05-04 19:28:29","hSubida":"2020-05-04 10:00:27","id":2,"idViaje":10014,"name":"","observacion":""},{"dni":"0300129747670A","hBajada":"2020-05-04 19:27:34","hSubida":"2020-05-04 09:59:43","id":1,"idViaje":10014,"name":"","observacion":""}],"placa":"A5S-951","proveedor":"NEGOCIOS Y TRANSPORTES LIZMAR E.I.R.L.","restriccionVOList":[],"ruta":"ECOSAC - AV.PERU","status":2}]
+RESP={"success":1,"data":[{"idPlanificacion":10014,"idViaje":10009}]}
+************************************************************************************************************************************
+************************************************************************************************************************************
+ </br> 
+************************************************************************************************************************************
+************************************************************************************************************************************
+<Agrego viajes ------>2020/05/05 _____ Tuesday a las 00:50
+==========================================================
+usuario={"codigo":"","id":2,"idViaje":0,"lastName":"","name":"JOSE ALDOLFO VILLALTA","password":"123456","typeUser":0,"user":"jvillalta"}
+viajes=[{"capacidad":48,"comentario":"","conductor":"VILLALTA IMAN, JOSE ALDOLFO","hConfirmado":"2020-05-04 19:49:52","hFin":"2020-05-04 19:50:15","hInicio":"2020-05-04 19:49:52","hProgramada":"2020-05-04 20:00:00","id":10015,"idWeb":0,"numPasajerosRegistrados":0,"numRestriccionesRegistradas":0,"pasajeroVOList":[{"dni":"FF0015444359FF","hBajada":"2020-05-04 19:50:15","hSubida":"2020-05-04 19:50:06","id":12,"idViaje":10015,"name":"","observacion":""},{"dni":"FF0015444336FF","hBajada":"2020-05-04 19:50:15","hSubida":"2020-05-04 19:50:00","id":11,"idViaje":10015,"name":"","observacion":""}],"placa":"A5Y-957","proveedor":"NEGOCIOS Y TRANSPORTES LIZMAR E.I.R.L.","restriccionVOList":[],"ruta":"ECOSAC - AV.PERU","status":2}]
+RESP={"success":1,"data":[{"idPlanificacion":10015,"idViaje":10010}]}
+************************************************************************************************************************************
+************************************************************************************************************************************
