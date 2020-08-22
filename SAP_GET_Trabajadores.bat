@@ -1,1 +1,0 @@
-start chrome -o "localhost/alertbusAPC/public/sap/trabajadores-request"
