@@ -51,8 +51,8 @@
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="centrocosto">Centro Costo</label>
-						<select name="centrocosto" id="centrocosto" class="form-control">
+        				<label for="centrocosto">Centro Costo</label> <br>
+						<select name="centrocosto" id="centrocosto" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
@@ -60,14 +60,14 @@
         		</div>
         		<div class="row">
         			<div class="form-group col-sm-3">
-        				<label for="transportista">Transportista</label>
-						<select name="transportista" id="transportista" class="form-control">
+        				<label for="transportista">Transportista</label> <br>
+						<select name="transportista" id="transportista" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="ruta">Ruta</label>
-						<select name="ruta" id="ruta" class="form-control">
+        				<label for="ruta">Ruta</label> <br>
+						<select name="ruta" id="ruta" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>

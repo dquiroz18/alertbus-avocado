@@ -218,7 +218,7 @@ class ViajeController extends Controller
                 $nrinsertados++;
     		}
     	}
-        return redirect('viajes/programar')->with('message', "Se han insertado $nrinsertados registros");
+        return response()->json(['message' => "Se han insertado $nrinsertados registros", 'success' => 1]);
     }
 
     public function programados()

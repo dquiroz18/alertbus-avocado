@@ -51,22 +51,22 @@
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="centrocosto">Centro Costo</label>
-						<select name="centrocosto" id="centrocosto" class="form-control">
+        				<label for="centrocosto">Centro Costo</label>  <br>
+						<select name="centrocosto" id="centrocosto" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         		</div>
         		<div class="row">
         			<div class="form-group col-sm-3">
-        				<label for="transportista">Transportista</label>
-						<select name="transportista" id="transportista" class="form-control">
+        				<label for="transportista">Transportista</label> <br>
+						<select name="transportista" id="transportista" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="ruta">Ruta</label>
-						<select name="ruta" id="ruta" class="form-control">
+        				<label for="ruta">Ruta</label> <br>
+						<select name="ruta" id="ruta" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
@@ -149,8 +149,8 @@
 					</select>
     			</div>
     			<div class="form-group col-sm-3">
-    				<label for="centrocosto">Centro de Costo</label>
-					<select name="centrocosto" id="centrocostoE" class="form-control">
+    				<label for="centrocosto">Centro de Costo</label> <br>
+					<select name="centrocosto" id="centrocostoE" class="form-control" style="width: 100%">
 						<option value="0">Seleccione</option>
 					</select>
     			</div>
@@ -167,14 +167,14 @@
             </div>
     		<div class="row">
     			<div class="form-group col-sm-3">
-    				<label for="transportista">Transportista</label>
-					<select name="transportista" id="transportistaE" class="form-control">
+    				<label for="transportista">Transportista</label> <br>
+					<select name="transportista" id="transportistaE" class="form-control" style="width: 100%">
 						<option value="0">Seleccione</option>
 					</select>
     			</div>
-    			<div class="form-group col-sm-3">
-    				<label for="ruta">Ruta</label>
-					<select name="ruta" id="rutaE" class="form-control">
+    			<div class="form-group col-sm-3"> 
+    				<label for="ruta">Ruta</label> <br>
+					<select name="ruta" id="rutaE" class="form-control"  style="width: 100%">
 						<option value="0">Seleccione</option>
 					</select>
     			</div>
@@ -254,8 +254,8 @@
 	      <div class="modal-body">
 	        <div class="row">
 	        	<div class="col-sm-5 form-group">
-	        		<label>Conductor</label>
-	        		<select name="idConductor" id="idConductor" class="form-control">
+	        		<label>Conductor</label> <br>
+	        		<select name="idConductor" id="idConductor" class="form-control" style="width: 100%">
 	        			<option value="0">Seleccione</option>
 	        		</select>
 	        		<!-- 
@@ -267,8 +267,8 @@
 	        		 -->
 	        	</div>
 	        	<div class="col-sm-3 form-group">
-	        		<label>Placa</label>
-	        		<select name="idVehiculo" id="idVehiculo" class="form-control">
+	        		<label>Placa</label> <br>
+	        		<select name="idVehiculo" id="idVehiculo" class="form-control" style="width: 100%">
 	        			<option value="0">Seleccione</option>
 	        		</select>
 	        		<!-- 
@@ -301,7 +301,13 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script>
-		$('#transportista').select2();
+		$('#transportista, #ruta, #centrocosto').select2();
+		$('#transportistaE, #rutaE, #centrocostoE').select2({
+			dropdownParent: $('#editar')
+		});
+		$('#idConductor, #idVehiculo').select2({
+			dropdownParent: $('#asignacion')
+		});
 	</script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
@@ -770,9 +776,11 @@
 					$('#horaE').val(data.hora.substring(0, 5));
 					//$('#areaE').val(data.idArea);
 					$('#centrocostoE').val(data.idCentroCosto);
+					$('#centrocostoE').trigger('change');
 					$('#transportistaE').val(data.idProveedor);
 					$('#transportistaE').trigger('change');
 					$('#rutaE').val(data.idRuta);
+					$('#rutaE').trigger('change');
 					$('#tipoVehiculoE').val(data.idTipoVehiculo);
 					$('#tipoViajeE').val(data.idTipoTarifa);
 					$('#placaE').val(data.idVehiculo);

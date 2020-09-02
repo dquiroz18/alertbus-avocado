@@ -32,10 +32,10 @@
 		        	<div class="x_title">
 		        		<h3>Listado de Usuario Web</h3>
 		        		<div class="row">
-		        			<div class="col-sm-4" style="display: none;">
+		        			<div class="col-sm-4" style="display: none;" >
 		        				<div class="form-group">
-		        					<label>Transportista</label>
-		        					<select id="cmbProveedor" class="form-control">
+		        					<label>Transportista</label> <br>
+		        					<select id="cmbProveedor" class="form-control" style="width: 100%">
 		        						<option value="0">Seleccione</option>
 		        						@foreach ($proveedores as $proveedor)
 		        							<option value="{{ $proveedor->idProveedor }}">{{ $proveedor->razonSocial }}</option>
@@ -128,8 +128,8 @@
     			</div>
       			<div class="col-sm-8" id="showCmbTransportista" style="display: none;">
     				<div class="form-group">
-    					<label>Transportista</label>
-    					<select id="cmbProveedor2" name="proveedor" class="form-control">
+    					<label>Transportista</label> <br>
+    					<select id="cmbProveedor2" name="proveedor" class="form-control" style="width: 100%">
     						<option value="0">Seleccione</option>
     						@foreach ($proveedores as $proveedor)
     							<option value="{{ $proveedor->idProveedor }}">{{ $proveedor->razonSocial }}</option>
@@ -160,8 +160,15 @@
 @endsection
 
 @section('script')
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script>
+		$('#cmbProveedor').select2();
+		$('#cmbProveedor2').select2({
+			dropdownParent: $('#new')
+		});
 		$('#cmbEmpresa').select2();
 		function listarUsuarios() {
 			$.ajaxSetup({
@@ -226,6 +233,7 @@
 			$('#password').removeAttr('required');
 			$('#password').attr('required', 'required');
 			$('#cmbProveedor2').val('');
+			$('#cmbProveedor2').trigger('change');
 			$('#cmbEmpresa').val('');
 			$('#cmbEmpresa').trigger('change');
 		});
@@ -236,6 +244,7 @@
     	$('#tipo').val($(this).data('tipo').substring(0, 1));
     	$('#tipo').trigger('change');
     	$('#cmbProveedor2').val($(this).data('idproveedor'));
+    	$('#cmbProveedor2').trigger('change');
     	var fs = $(this).data('idempresa')
     	if(fs != undefined){
 	    	var ff = fs;
@@ -256,6 +265,7 @@
     $('#tipo').change(function () {
     	if($(this).val() == 'A'){
     		$('#cmbProveedor2').val('0');
+    		$('#cmbProveedor2').trigger('change');
     		$('#showCmbTransportista').hide();
     		$('#showCmbEmpresa').show();
     		$('#cmbEmpresa').val('');

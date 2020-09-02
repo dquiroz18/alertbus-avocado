@@ -22,8 +22,7 @@
 	</style>
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<div class="col-sm-12">
-        <form action="{{ url('viajes/programar') }}" method="POST">
-	    {{ csrf_field() }}
+        <form id="frmProgramar">
 	    <div class="row">
 	       <div class="col-xs-12">
 	           <div class="breadcrumbs">
@@ -33,13 +32,15 @@
 	           </div>
 	       </div>
 	    </div>
-	    @if (session('message'))
-	    	<div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h4><i class="icon fa fa-check"></i> Exito</h4>
-               	{!! session('message') !!}
-             </div>
-	    @endif
+	    <div class="row" id="alert" style="display: none;">
+		    	<div class="col-sm-12">
+		    		<div class="alert alert-success">
+		            	<button type="button" id="alert-close">×</button>
+		            	<h4><i class="icon fa fa-check"></i> Mensaje</h4>
+		            	<span id="alert-message"></span>
+		         	</div>
+		    	</div>
+		    </div>
 	    <div class="x_panel">
         	<div class="x_title">
 	            <h2>Programar Viajes</h2>
@@ -131,10 +132,10 @@
 		var inputHora = $('<input type="time" class="horas form-control" name="horas[]">');
 		var inputPrecios = $('<input type="text" class="precios form-control" name="precios[]">');
 		
-		var comboRutas = $('<select class="rutas form-control" name="rutas[]">'+
+		var comboRutas = $('<select class="rutas form-control" name="rutas[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
-		var comboTransportistas = $('<select class="transportistas form-control" name="transportistas[]">'+
+		var comboTransportistas = $('<select class="transportistas form-control" name="transportistas[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
 		var comboTiposVehiculos = $('<select class="tiposVehiculos form-control" name="tiposVehiculos[]">'+
@@ -143,7 +144,7 @@
 		var comboTarifas = $('<select class="tarifas form-control" name="tarifas[]">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
-		var comboCentroCostos = $('<select class="centrocostos form-control" name="centrocostos[]">'+
+		var comboCentroCostos = $('<select class="centrocostos form-control" name="centrocostos[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
 
@@ -302,6 +303,9 @@
 			createdRow: function( row ) {
 			    $(row).find('td:eq(0)').css('text-align', 'center');
 			    $(row).find('td:eq(9)').css('text-align', 'center');
+			    $(row).find('.centrocostos').select2();
+			    $(row).find('.transportistas').select2();
+			    $(row).find('.rutas').select2();
 			}
 		});
 		$('#menu_toggle').click();
@@ -314,7 +318,7 @@
 			if (nroFilas > 0) {
 				for (var i = 0; i < nroFilas; i++) {
 					tablaProgramacion.row.add([
-						nro,
+						(i+1),
 						inputFecha.prop('outerHTML'),
 						inputHora.prop('outerHTML'),
 						//comboAreas.prop('outerHTML'),
@@ -329,9 +333,6 @@
 					nro += 1;
 				}
 				tablaProgramacion.draw(false);
-				$('.centrocostos').select2();
-				$('.transportistas').select2();
-				$('.rutas').select2();
 			}
 		});
 
@@ -342,44 +343,78 @@
 	    }
 	});
 
-	$('#registrar').click(function () {
-		hasErrors = false;
-		cCampos = 0;
-		cabecera = ['Nro.', 'Fecha', 'Hora', 'Centro Costo', 'Transportista', 'Ruta' , 'Tipo de Vehículo', 'Tarifa', 'Tarifa Final'];
-		$('#tablaProgramacion tr').each( function(fila) {
-			//check fila empty
+	</script>
+	<script>
+		$('#frmProgramar').submit(function (e) {
+			e.preventDefault();
+			hasErrors = false;
 			cCampos = 0;
-			$(this).find('td').each( function() {
-				if($(this).find('select').val() == '0' || $(this).find('select').val() == ''){
-					cCampos += 1;
-				}
-				if($(this).find('input').val() == '' || $(this).find('input').val() == '0'){
-					cCampos += 1;
-				}
-			});
-			if (cCampos != 7) {
-				$(this).find('td').each( function(columna) {
+			cabecera = ['Nro.', 'Fecha', 'Hora', 'Centro Costo', 'Transportista', 'Ruta' , 'Tipo de Vehículo', 'Tarifa', 'Tarifa Final'];
+
+			var rows = tablaProgramacion.$('tr', {"filter": "applied"});// viewlist is
+
+			$.each(rows, function (fila) {
+				//check fila empty
+				cCampos = 0;
+				$(this).find('td').each( function() {
 					if($(this).find('select').val() == '0' || $(this).find('select').val() == ''){
-						hasErrors = true;
-						alert("Error en la fila: " + fila + ", columna: " + cabecera[columna]);
-						return false;
+						cCampos += 1;
 					}
 					if($(this).find('input').val() == '' || $(this).find('input').val() == '0'){
-						hasErrors = true;
-						alert("Error en la fila: " + fila + ", columna: " + cabecera[columna]);
-						return false;
+						cCampos += 1;
 					}
 				});
-			}
+				if (cCampos != 7) {
+					$(this).find('td').each( function(columna) {
+						if($(this).find('select').val() == '0' || $(this).find('select').val() == ''){
+							hasErrors = true;
+							alert("Error en la fila: " + (fila+1) + ", columna: " + cabecera[columna]);
+							return false;
+						}
+						if($(this).find('input').val() == '' || $(this).find('input').val() == '0'){
+							hasErrors = true;
+							alert("Error en la fila: " + (fila+1) + ", columna: " + cabecera[columna]);
+							return false;
+						}
+					});
+				}
+				if (hasErrors) {
+					return false;
+				}
+			});
 			if (hasErrors) {
 				return false;
 			}
-		});
-		if (hasErrors) {
-			return false;
-		}
-	});
-	</script>
+			data = tablaProgramacion.$('input, select').serialize();
+			data = data + '&empresa=' + $('#empresa').val();
+			console.log(data);
+			//return false;
+			$.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
 
+			$.ajax({
+				url: "{{ url('viajes/programar') }}",
+				method: 'POST',
+				data: data,
+				success: function(response){
+					tablaProgramacion.clear().draw();
+					var message = response.message;
+					$('#alert-message').text(message);
+					if (response.success == '0') {
+						$('#alert').find('.alert').removeClass('alert-success');
+						$('#alert').find('.alert').addClass('alert-danger');
+					}
+					else {
+						$('#alert').find('.alert').addClass('alert-success');
+						$('#alert').find('.alert').removeClass('alert-danger');	
+					}
+					$('#alert').show();
+				}
+			});
+		})
+	</script>
 
 @endsection

@@ -43,28 +43,28 @@
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="centrocosto">Centro de Costo</label>
-						<select name="centrocosto" id="centrocosto" class="form-control">
+        				<label for="centrocosto">Centro de Costo</label> <br>
+						<select name="centrocosto" id="centrocosto" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         		</div>
         		<div class="row">
         			<div class="form-group col-sm-3">
-        				<label for="transportista">Transportista</label>
-						<select name="transportista" id="transportista" class="form-control">
+        				<label for="transportista">Transportista</label> <br>
+						<select name="transportista" id="transportista" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         			<div class="form-group col-sm-3">
-        				<label for="ruta">Ruta</label>
-						<select name="ruta" id="ruta" class="form-control">
+        				<label for="ruta">Ruta</label>  <br>
+						<select name="ruta" id="ruta" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
         			</div>
         			<div class="col-sm-3">
-						<label for="placa">Placa</label> 
-						<select id="placa" class="form-control">
+						<label for="placa">Placa</label>   <br>
+						<select id="placa" class="form-control" style="width: 100%">
 							<option value="0">Seleccione</option>
 						</select>
 					</div>
@@ -109,6 +109,8 @@
 				                    <th>Centro Costo</th>
 				                    <th>Transportista</th>
 				                    <th>Ruta</th>
+				                    <th>Placa</th>
+				                    <th>Conductor</th>
 				                    <!-- <th>Tipo Tarifa</th>  -->
 				                    <th width="80px">Tarifa</th>
 				                </tr>
@@ -155,7 +157,7 @@
 @section('script')
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script>
-		$('#transportista').select2();
+		$('#centrocosto, #transportista, #ruta, #placa').select2();
 	</script>
 	<script>
 		var atLeastOne = false;
@@ -226,6 +228,7 @@
 					$('#centrocosto').append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
 			}
+			$('#centrocosto').trigger('change')
 		});
 
 		$('#transportista').change(function () {
@@ -249,6 +252,8 @@
 					$('#placa').append('<option value="'+placas[i].idVehiculo+'">'+placas[i].placaVehiculo+'</option>');
 				}
 			}
+			$('#ruta').trigger('change')
+			$('#placa').trigger('change')
 		});
 
 		$('#desde, #hasta').change(function() {
@@ -305,6 +310,8 @@
 							data[i].nombreCentroCosto,
 							data[i].nombreProveedor,
 							data[i].nombreRuta,
+							data[i].placaVehiculo,
+							data[i].nombreConductor,
 							//data[i].nombreTipoTarifa,
 							data[i].tarifa
 						]).draw()
@@ -325,9 +332,12 @@
 			var ids = [];
 			var desde = $('#desde').val();
 			var hasta = $('#hasta').val();
-			$('.tocopy').each(function () {
-				if ($(this).is(':checked')) {
-					ids.push($(this).data('id'));
+			var rows = tablaProgramacion.$('tr', {"filter": "applied"});// viewlist is
+			$.each(rows, function () {
+				var checkbox = $($(this).find('td').eq(0)).find('input');
+				var val_checkbox = checkbox.prop('checked');
+				if (val_checkbox) {
+					ids.push($(checkbox).data('id'));
 				}
 			});
 

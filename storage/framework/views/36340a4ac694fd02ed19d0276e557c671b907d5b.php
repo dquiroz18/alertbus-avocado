@@ -123,8 +123,8 @@
         				</div>
         			</div>
         			<div class="col-sm-4">
-        				<label>Ruta</label>
-        				<select name="ruta" id="cmbRuta" class="form-control">
+        				<label>Ruta</label> <br>
+        				<select name="ruta" id="cmbRuta" class="form-control" style="width: 100%">
         					<option value="0">Seleccione</option>
         				</select>
         			</div>
@@ -178,6 +178,13 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $('#cmbRuta').select2({
+        	dropdownParent: $('#new')
+        });
+    </script>
 	<script>
 		var centerColumns = [0, 2, 3, 4, 5, 6, 7];
 	</script>
@@ -283,6 +290,7 @@
 					$('#cmbTransportistaM').trigger('change');
 					$('#tipoVehiculo').val(tipoVehiculo);
 					$('#cmbRuta').val(ruta);
+					$('#cmbRuta').trigger('change');
 					$(this).hide();
 				}
 			}
@@ -295,6 +303,7 @@
 				$('#cmbTransportistaM').val(model.idProveedor);
 				$('#cmbTransportistaM').trigger('change');
 				$('#cmbRuta').val(model.idRuta);
+				$('#cmbRuta').trigger('change');
 				$('#cmbTipoVehiculo').val(model.idTipoVehiculo);
 				//$('#cmbTipoTarifa').val(model.idTipoTarifa);
 				$('#txtPrecio').val(model.precio);
