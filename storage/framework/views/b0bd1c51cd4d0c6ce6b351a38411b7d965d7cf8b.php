@@ -48,7 +48,6 @@
 								<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
 		        			</div>
 		        		</div>
-		        		<div class="col-sm-10"></div>
 		        		<div class="col-sm-2">
 		        			<a href="<?php echo e(url('sap/trabajadores-request')); ?>" target="_blank" class="btn btn-success"><i class="fa fa-refresh"></i> Actualizar</a>
 		        		</div>

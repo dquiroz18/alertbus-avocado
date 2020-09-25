@@ -19,6 +19,7 @@
     <!-- NProgress -->
     <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
+    <link href="{{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <!-- Custom Theme Style -->
@@ -90,22 +91,23 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-           @if (Auth::user()->tipo=='E' || Auth::user()->tipo=='A')        
-                  <li><a><i class="fa fa-check"></i> Operaciones <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    
-        						<li id="programar_viajes"><a href="{{ url('viajes/programar') }}">Programar Viajes</a></li>
-                    <li id="importar_programacion_viajes"><a href="{{ url('viajes/programar/importar') }}">Importar Programación</a></li>
-        						<li id="copiar_programados_viajes"><a href="{{ url('viajes/programados/copiar') }}">Copiar Programación</a></li>
-                    </ul>
-                  </li>
-          @endif                               
+                 @if (Auth::user()->tipo=='E' || Auth::user()->tipo=='A')        
+                    <li><a><i class="fa fa-check"></i> Operaciones <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                      
+          						<li id="programar_viajes"><a href="{{ url('viajes/programar') }}">Programar Viajes</a></li>
+                      <li id="importar_programacion_viajes"><a href="{{ url('viajes/programar/importar') }}">Importar Programación</a></li>
+          						<li id="copiar_programados_viajes"><a href="{{ url('viajes/programados/copiar') }}">Copiar Programación</a></li>
+                      </ul>
+                    </li>
+                @endif                               
                   <li><a><i class="fa fa-files-o"></i> Reportes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 					            <li id="programados_viajes"><a href="{{ url('viajes/programados') }}">Viajes Programados</a></li>
                       <li id="reporte_personal"><a href="{{ url('reportes/viajes') }}">Viajes Realizados</a></li>
                       <!-- <li id="reporte_personal"><a href="{{ url('reportes/viaje-personal') }}">Manifiesto</a></li> -->
-					           <li id="reporte_personal"><a href="{{ url('reportes/viajes-liquidacion') }}">Liquidación</a></li>                  
+                     <li id="reporte_personal"><a href="{{ url('reportes/viajes-por-trabajador') }}">Viajes por Trabajador</a></li>
+					           <li id="reporte_personal"><a href="{{ url('reportes/viajes-liquidacion') }}">Liquidación</a></li>
                     </ul>
                   </li>
                   @if (Auth::user()->tipo=='E' || Auth::user()->tipo=='A')        
@@ -169,7 +171,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Copyright © 2019 | IBAO PERU
+            Copyright © {{ date('Y') }} | IBAO PERU
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -188,6 +190,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}" ></script>
+    <script src="{{ asset('vendors/datatables.net/js/spanish.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 

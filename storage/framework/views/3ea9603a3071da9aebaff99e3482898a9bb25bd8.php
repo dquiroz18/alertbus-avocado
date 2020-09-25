@@ -1,7 +1,7 @@
 <?php $__env->startSection('main-content'); ?>
 <style>
 		.divtable {
-			overflow-x: scroll;
+			 overflow-x: hidden;
 			overflow-y: hidden;
     		white-space: nowrap;
 		}
@@ -301,7 +301,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script>
-		$('#transportista, #ruta, #centrocosto').select2();
+		$('#transportista, #ruta, #centrocosto, #placa').select2();
 		$('#transportistaE, #rutaE, #centrocostoE').select2({
 			dropdownParent: $('#editar')
 		});
@@ -329,8 +329,21 @@
 	$('#asignacion').on('show.bs.modal', function () {
 		$('#form_asignacion').trigger("reset");
 	});
-
+	var lastPage = 0;
+	$('#tablaProgramacion').on( 'page.dt', function () {
+		var info = tablaProgramacion.page.info();
+		lastPage = info.page;
+	});
 		$(document).ready(function () {
+			tablaProgramacion.buttons().container().prependTo( tablaProgramacion.table().container() );
+
+			for (var i = 0; i < rutas.length; i++) {
+				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
+			}
+
+			for (var i = 0; i < rutas.length; i++) {
+				$('#rutaE').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
+			}
 			for (var i = 0; i < empresas.length; i++) {
 				("<?php echo e(Auth::user()->idEmpresa); ?>".split('-') ).forEach(function(idEmpresa) {
 					if(idEmpresa == empresas[i].idEmpresa){
@@ -393,13 +406,9 @@
 		$('#transportista').change(function () {
 			var idTransportista = $(this).val();
 
-			$('#ruta').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#tipoViaje').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#placa').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 
-			for (var i = 0; i < rutas.length; i++) {
-				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
-			}
 
 			for (var i = 0; i < tiposViajes.length; i++) {
 				if (idTransportista == tiposViajes[i].idProveedor) {
@@ -417,14 +426,9 @@
 		$('#transportistaE').change(function () {
 			var idTransportista = $(this).val();
 
-			$('#rutaE').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#tipoViajeE').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#tipoVehiculoE').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#placaE').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
-
-			for (var i = 0; i < rutas.length; i++) {
-				$('#rutaE').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
-			}
 
 			for (var i = 0; i < tiposViajes.length; i++) {
 				if (idTransportista == tiposViajes[i].idProveedor) {
@@ -439,7 +443,7 @@
 			}
 
 			for (var i = 0; i < tiposVehiculos.length; i++) {
-    if(idTransportista == tiposVehiculos[i].idProveedor)
+    		if(idTransportista == tiposVehiculos[i].idProveedor)
 				$('#tipoVehiculoE').append('<option value="'+tiposVehiculos[i].idTipoVehiculo+'">'+tiposVehiculos[i].nombreTipoVehiculo+'</option>');
 			}
 
@@ -449,7 +453,7 @@
 
 		$('#tarifaE').change(function() {
 			var valor = $(this).find('option:selected').text();
-			if (valor != "Seleccione") $('#precio_finalE').val(valor);
+			if (valor != "Seleccione") $('#precio_finalE').val(parseFloat(valor).toFixed(2));
 			else $('#precio_finalE').val('0');
 		});
 
@@ -493,7 +497,7 @@
 		});
 
 		var tablaProgramacion = $('#tablaProgramacion').DataTable({
-			dom: 'Bfrtip',
+			order: [],
 	        buttons: [
 	            {
 	                extend: 'excelHtml5',
@@ -611,6 +615,8 @@
 					}
 					$('#loading').hide();
 					$('#tablaProgramacion').show();
+					tablaProgramacion.page.info();
+					tablaProgramacion.page(lastPage).draw('page');
 				}
 			});
 		});

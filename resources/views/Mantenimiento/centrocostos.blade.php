@@ -148,7 +148,7 @@
 
 @section('script')
 	<script>
-		var centerColumns = [0, 1, 2];
+		var centerColumns = [0, 1, 3, 4];
 	</script>
 	@include('helpers.dataManagment')
 	<script>

@@ -146,7 +146,7 @@
 
 <?php $__env->startSection('script'); ?>
 	<script>
-		var centerColumns = [0, 1, 2];
+		var centerColumns = [0, 1, 3, 4];
 	</script>
 	<?php echo $__env->make('helpers.dataManagment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<script>

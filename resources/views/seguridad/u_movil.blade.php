@@ -139,6 +139,11 @@
 			    $(row).find('td:eq(3)').css('text-align', 'center');
 			}
 		});
+		var lastPage = 0;
+		$('#tbl_data').on( 'page.dt', function () {
+			var info = t.page.info();
+			lastPage = info.page;
+		});
 		function listarUsuarios() {
 			$.ajaxSetup({
 		      headers: {
@@ -159,7 +164,8 @@
 							'<button type="button" data-toggle="modal" data-target="#new" class="btn btn-warning edit" data-idusuario="'+filas[i].idUsuarioMovil+'" data-idconductor="'+filas[i].idConductor+'" data-nombretrabajador="'+filas[i].nombreConductor+'" data-usuario="'+filas[i].nombreUsuario+'" ><i class="fa fa-edit"></i></button>',
 							'<button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger delete" data-idusuario="'+filas[i].idUsuarioMovil+'"><i class="fa fa-remove"></i></button>'
 						]).draw();
-						
+						t.page.info();
+						t.page(lastPage).draw('page');
 					}
 				},
 				error: function(xmlhttprequest, textstatus, message){

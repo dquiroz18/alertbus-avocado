@@ -106,8 +106,9 @@ class TrabajadorController extends Controller
                 $categoria = $item['Categoria'];
                 $area = $item['DesUnidadOrganizativa'];
                 $cargo = $item['DesPosicion'];
+                $fechaIngreso = $item['FechaIngreso'];
 
-                $sql = DB::select("EXEC [AlertBus_SAP_SP_Trabajadores] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?", [$codigoEmpresa, $tarjetaRFID, $codigoTrabajador, $nroDocumento, $apellidoPaterno, $apellidoMaterno, $nombres, $categoria, $area, $cargo]);
+                $sql = DB::select("EXEC [AlertBus_SAP_SP_Trabajadores] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?", [$codigoEmpresa, $tarjetaRFID, $codigoTrabajador, $nroDocumento, $apellidoPaterno, $apellidoMaterno, $nombres, $categoria, $area, $cargo, $fechaIngreso]);
             }
         }
         echo "Procesando.... Hecho! <br>";

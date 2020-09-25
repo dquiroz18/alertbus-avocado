@@ -306,7 +306,7 @@
 				$('#cmbRuta').trigger('change');
 				$('#cmbTipoVehiculo').val(model.idTipoVehiculo);
 				//$('#cmbTipoTarifa').val(model.idTipoTarifa);
-				$('#txtPrecio').val(model.precio);
+				$('#txtPrecio').val(parseFloat(model.precio).toFixed(2));
 				if (model.desde != null) $('#txtDesde').val(model.desde.substring(0, 10));
 				if (model.hasta != null) $('#txtHasta').val(model.hasta.substring(0, 10));
 				$('#txtIdN').val(model.idTarifa);

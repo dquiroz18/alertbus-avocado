@@ -31,7 +31,7 @@
 		        		<div class="row">
 		        			<div class="col-sm-2">
 		        				<br>
-										<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
+								<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
 		        			</div>
 		        			<div class="clearfix"></div>
 		        				<div class="col-sm-4" id="showNewProveedor">
@@ -125,7 +125,7 @@
 
 <?php $__env->startSection('script'); ?>
 	<script>
-		var centerColumns = [0, 1];
+		var centerColumns = [0, 2, 3];
 	</script>
 	<?php echo $__env->make('helpers.dataManagment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<script>
@@ -193,12 +193,12 @@
 	  		showMessage(success, message);
 	  		$('#buscar').trigger('click');
 	  		$('#delete form').trigger('reset');
-				$('#delete').modal('hide');
+			$('#delete').modal('hide');
 	  	}
 	  	else {
-				$('#alert-message').text("Error al guardar Transportista. Contacte con Soporte");
-				$('#alert').show();
-				$('#delete').modal('hide');
+			$('#alert-message').text("Error al guardar Transportista. Contacte con Soporte");
+			$('#alert').show();
+			$('#delete').modal('hide');
 	  	}
 	  });
 

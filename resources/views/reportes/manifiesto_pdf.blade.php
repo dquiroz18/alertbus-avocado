@@ -76,17 +76,16 @@
 		<tr>
 			<td style="text-align: center; background: #2A3F54; color: white"  align="center" width="70px"><b>N°</b></td>
 			<td style="text-align: center; background: #2A3F54; color: white"  align="center" width="90px"><b>N° Documento</b></td>
-			<td style="text-align: center; background: #2A3F54; color: white" colspan="6" align="center" width="230px"><b>Trabajador</b></td>
-			<td style="text-align: center; background: #2A3F54; color: white" align="center" colspan="2" width="200px"><b>Area</b></td>
+			<td style="text-align: center; background: #2A3F54; color: white" colspan="6" align="center" width="280px"><b>Trabajador</b></td>
+			<td style="text-align: center; background: #2A3F54; color: white" align="center" colspan="2" width="250px"><b>Area</b></td>
 		</tr>
 			@foreach ($data as $item)
 				<tr>
 					<td align="center">{{ $i }}<?php $i++ ?></td>
 					<td align="center">{{ $item->numeroDocumento }}</td>
 					<td colspan="6" style="padding-left: 10px">{{ ucwords($item->nombreTrabajador) }}</td>
-					<td align="center">{{ $item->areaTrabajador }}</td>
+					<td colspan="2">{{ $item->areaTrabajador }}</td>
 				</tr>
-				<tr><td colspan="10" height="1px" style="border-color: white"></td></tr>
 			@endforeach
 		<tr >
 			<td height="40px" colspan="10" style="border-color: white"></td>

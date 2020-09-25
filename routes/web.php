@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('reportes/viajes-liquidacion', 'ReporteController@liquidacion');
 	Route::get('reportes/viajes/detalle/{id}', 'ReporteController@viaje_detalle');
 	Route::get('reportes/viajes/tracking/{id}', 'ReporteController@viaje_tracking');
+	Route::get('reportes/viajes-por-trabajador', 'ReporteController@viajesTrabajador');
 
 	Route::get('tracking_iframe/{id}', 'ReporteController@tracking');	
 	

@@ -30,7 +30,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
-        $('#transportista, #ruta, #centrocosto').select2();
+        $('#transportista, #ruta, #centrocosto, #placa').select2();
     </script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
@@ -45,6 +45,11 @@
 		var placas = <?php echo json_encode($vehiculos); ?>;
 		var centerColumns = [12, 13, 14, 15, 16];
 		$(document).ready(function () {
+			tabla.buttons().container().prependTo( tabla.table().container() );
+			
+			for (var i = 0; i < rutas.length; i++) {
+				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
+			}
 			for (var i = 0; i < empresas.length; i++) {
                 ("<?php echo e(Auth::user()->idEmpresa); ?>".split('-')).forEach(function(idEmpresa) {
 					if(idEmpresa == empresas[i].idEmpresa)
@@ -109,8 +114,7 @@
 				for (var i = 0; i < centerColumns.length; i++) {
 					$(row).find('td:eq('+centerColumns[i]+')').css('text-align', 'center');
 				}
-			},
-			dom: 'Bfrtip',
+			}, 
 	        buttons: [
 	            {
 	                extend: 'excelHtml5',

@@ -49,7 +49,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
-        $('#transportista, #ruta, #centrocosto').select2();
+        $('#transportista, #ruta, #centrocosto, #placa').select2();
     </script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
@@ -63,6 +63,11 @@
 		var placas = {!! json_encode($vehiculos) !!};
 		var centerColumns = [7, 8, 9];
 		$(document).ready(function () {
+			tabla.buttons().container().prependTo( tabla.table().container() );
+			
+			for (var i = 0; i < rutas.length; i++) {
+				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
+			}
 			for (var i = 0; i < empresas.length; i++) {
                 ("{{Auth::user()->idEmpresa}}".split('-')).forEach(function(idEmpresa) {
 					if(idEmpresa == empresas[i].idEmpresa)
@@ -102,13 +107,8 @@
 		$('#transportista').change(function () {
 			var idTransportista = $(this).val();
 
-			$('#ruta').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#tipoViaje').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#placa').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
-
-			for (var i = 0; i < rutas.length; i++) {
-				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
-			}
 
 			for (var i = 0; i < tiposViajes.length; i++) {
 				if (idTransportista == tiposViajes[i].idProveedor) {
@@ -131,8 +131,7 @@
 				for (var i = 0; i < centerColumns.length; i++) {
 					$(row).find('td:eq('+centerColumns[i]+')').css('text-align', 'center');
 				}
-			},
-			dom: 'Bfrtip',
+			}, 
 	        buttons: [
 	            {
 	                extend: 'excelHtml5',

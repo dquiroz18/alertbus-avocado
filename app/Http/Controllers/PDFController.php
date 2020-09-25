@@ -34,6 +34,7 @@ class PDFController extends Controller
         $logo = $result[0]->logo;
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif', 'orientation' => 'landscape']);
         return PDF::loadView('reportes.manifiesto_pdf', ['data' => $result, 'logo' => $logo])->download('Reporte Manifiesto.pdf');
+        //return view('reportes.manifiesto_pdf', ['data' => $result, 'logo' => $logo]);
     }
 
     public function manifiesto_pdf($idEmpresa, $idCentroCosto, $idTransportista, $idRuta, $idTipoViaje, $desde, $hasta, $sp_name)

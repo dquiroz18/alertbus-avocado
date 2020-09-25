@@ -1,5 +1,5 @@
 <script>
-	
+	var lastPage = 0;
 	//var centerColumns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	var table = $('#tableManagment').DataTable({
 		"paging": true,
@@ -13,9 +13,13 @@
 	});
 
 	var id = 0;
-  $('#tableManagment').on('click', '.edit, .delete', function(){
-  	id = $(this).data('id');
-  });
+  	$('#tableManagment').on('click', '.edit, .delete', function(){
+  		id = $(this).data('id');
+  	});
+  	$('#tableManagment').on( 'page.dt', function () {
+		var info = table.page.info();
+		lastPage = info.page;
+	});
 
   /**
   * @ids_, collection of ids_
@@ -134,7 +138,9 @@
 			}
 			table.row.add(row);
 		}
-		table.draw(false);
+		table.draw();
+		table.page.info();
+		table.page(lastPage).draw('page');
 	}
 
 	function listarOnSelect(columnIDNumber, columnPrincipalName, data, select) {

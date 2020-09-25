@@ -191,20 +191,20 @@
 		});
 
 		$('#all').click(function () {
-			if ($(this).is(':checked')) {
-				$('.tocopy').each(function () {
-					$(this).prop('checked', true)
-				})	
-			}
-			else {
-				$('.tocopy').each(function () {
-					$(this).prop('checked', false)
-				})	
-			}
+			var rows,checked;  
+			var rows = tablaProgramacion.$('tr', {"filter": "applied"});// viewlist is
+			checked = $(this).prop('checked');
+			$.each(rows, function () {
+				var checkbox = $($(this).find('td').eq(0)).find('input').prop('checked', checked);
+			});
 			
 		})
 
 		$(document).ready(function () {
+
+			for (var i = 0; i < rutas.length; i++) {
+				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
+			}
 			for (var i = 0; i < empresas.length; i++) {
                 ("<?php echo e(Auth::user()->idEmpresa); ?>".split('-')).forEach(function(idEmpresa) {
 					if(idEmpresa == empresas[i].idEmpresa)
@@ -232,13 +232,8 @@
 		$('#transportista').change(function () {
 			var idTransportista = $(this).val();
 
-			$('#ruta').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#placa').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
 			$('#tipoViaje').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
-
-			for (var i = 0; i < rutas.length; i++) {
-				$('#ruta').append('<option value="'+rutas[i].idRuta+'">'+rutas[i].origen+'-'+rutas[i].destino+'</option>')
-			}
 
 			for (var i = 0; i < tiposViajes.length; i++) {
 				if (idTransportista == tiposViajes[i].idProveedor) {
@@ -258,7 +253,9 @@
 			out_estado = 1;
 		});
 
-		var tablaProgramacion = $('#tablaProgramacion').DataTable();
+		var tablaProgramacion = $('#tablaProgramacion').DataTable({
+			order: []
+		});
 
 
 

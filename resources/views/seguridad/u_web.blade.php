@@ -191,6 +191,8 @@
 							'<button type="button" data-toggle="modal" data-target="#new" class="btn btn-warning edit" data-idusuario="'+filas[i].idUsuarioWeb+'" data-tipo="'+filas[i].tipoUsuario+'" data-usuario="'+filas[i].nombreUsuario+'" data-idempresa="'+filas[i].idEmpresa+'" data-idproveedor="'+filas[i].idProveedor+'"><i class="fa fa-edit"></i></button>',
 							'<button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger delete" data-idusuario="'+filas[i].idUsuarioWeb+'"><i class="fa fa-remove"></i></button>'
 						]).draw();
+						t.page.info();
+						t.page(lastPage).draw('page');
 					}
 				},
 				error: function(xmlhttprequest, textstatus, message){
@@ -209,10 +211,8 @@
 			createdRow: function( row ) {
 			    $(row).find('td:eq(0)').css('text-align', 'center');
 			    $(row).find('td:eq(1)').css('text-align', 'center');
-			    $(row).find('td:eq(2)').css('text-align', 'center');
+			    $(row).find('td:eq(3)').css('text-align', 'center');
 			    $(row).find('td:eq(4)').css('text-align', 'center');
-			    $(row).find('td:eq(5)').css('text-align', 'center');
-			    $(row).find('td:eq(6)').css('text-align', 'center');
 			}
 		});
 
@@ -223,7 +223,8 @@
 			if (!a) {
 				$('#frm_save').trigger('reset');
 				$('#usuario').val('');	
-				$('#password').val('');	
+				$('#password').val('');
+				$('#tipo').trigger('change');
 			}
 		});
 

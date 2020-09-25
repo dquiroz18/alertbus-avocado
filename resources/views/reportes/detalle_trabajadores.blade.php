@@ -47,6 +47,7 @@
 		
 
 		$(document).ready(function () {
+			tabla.buttons().container().prependTo( tabla.table().container() );
 			for (var i = 0; i < empresas.length; i++) {
                 ("{{Auth::user()->idEmpresa}}".split('-')).forEach(function(idEmpresa) {
 					if(idEmpresa == empresas[i].idEmpresa)
@@ -98,8 +99,7 @@
 			}
 		});
 
-		var tabla = $('#tabla').DataTable({
-			dom: 'Bfrtip',
+		var tabla = $('#tabla').DataTable({ 
 	        buttons: [
 	            {
 	                extend: 'excelHtml5',

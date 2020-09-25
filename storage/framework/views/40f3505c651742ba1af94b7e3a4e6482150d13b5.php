@@ -1,7 +1,7 @@
 <?php $__env->startSection('main-content'); ?>
 	<style>
 		.divtable {
-			overflow-x: scroll;
+			 overflow-x: hidden;
 			overflow-y: hidden;
     		white-space: nowrap;
 		}
@@ -127,8 +127,8 @@
 		var tarifas = <?php echo json_encode($tarifas); ?>;
 		
 		var inputFecha = $('<input type="date" class="fechas form-control" name="fechas[]" value="'+"<?php echo e(date('Y-m-d')); ?>"+'">');
-		var inputHora = $('<input type="time" class="horas form-control" name="horas[]">');
-		var inputPrecios = $('<input type="text" class="precios form-control" name="precios[]">');
+		var inputHora = $('<input type="time" class="horas form-control" name="horas[]" style="width: 100%">');
+		var inputPrecios = $('<input type="text" class="precios form-control" name="precios[]" style="width: 100%">');
 		
 		var comboRutas = $('<select class="rutas form-control" name="rutas[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
@@ -136,10 +136,10 @@
 		var comboTransportistas = $('<select class="transportistas form-control" name="transportistas[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
-		var comboTiposVehiculos = $('<select class="tiposVehiculos form-control" name="tiposVehiculos[]">'+
+		var comboTiposVehiculos = $('<select class="tiposVehiculos form-control" name="tiposVehiculos[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
-		var comboTarifas = $('<select class="tarifas form-control" name="tarifas[]">'+
+		var comboTarifas = $('<select class="tarifas form-control" name="tarifas[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
 		var comboCentroCostos = $('<select class="centrocostos form-control" name="centrocostos[]" style="width: 100%">'+
@@ -150,11 +150,17 @@
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');*/
 
-		var comboTiposViajes = $('<select class="tiposViajes form-control" name="tiposViajes[]">'+
+		var comboTiposViajes = $('<select class="tiposViajes form-control" name="tiposViajes[]" style="width: 100%">'+
 			        			'<option value="0">Seleccione</option>'+
 			        		'</select>');
 
 		var btnDeletes = $('<button class="btn btn-danger deletes"><i class="fa fa-trash"></i></button>');
+
+		var lastPage = 0;
+		$('#tablaProgramacion').on( 'page.dt', function () {
+			var info = tablaProgramacion.page.info();
+			lastPage = info.page;
+		});
 
 		$(document).ready(function () {
 			for (var i = 0; i < empresas.length; i++) {
@@ -246,7 +252,7 @@
 					) {
 					var idTarifa = tarifas[i].idTarifa;
 					var precio = tarifas[i].precio;
-					comboTarifas.append('<option value="'+tarifas[i].idTarifa+'">'+tarifas[i].precio+'</option>');
+					comboTarifas.append('<option value="'+tarifas[i].idTarifa+'">'+parseFloat(tarifas[i].precio).toFixed(2)+'</option>');
 					encontrado = true;
 				}
 			}
@@ -255,7 +261,7 @@
 			$(this).parent().next('td').append(comboTarifas.prop("outerHTML")).find('select').val(idTarifa);
 			//$(this).parent().next('td').html(comboTarifas.prop("outerHTML"));
 			$(this).parent().next('td').next('td').find('input').remove();
-			$(this).parent().next('td').next('td').append(inputPrecios.prop("outerHTML")).find('input').val(precio);
+			$(this).parent().next('td').next('td').append(inputPrecios.prop("outerHTML")).find('input').val(parseFloat(precio).toFixed(2));
 
 		});
 
@@ -278,6 +284,8 @@
 		        .row( $(this).parents('tr') )
 		        .remove()
 		        .draw();
+		    tablaProgramacion.page.info();
+			tablaProgramacion.page(lastPage).draw('page');
 		});
 /*
 		$('#tablaProgramacion').on('change', '.tiposVehiculos', function () {
@@ -296,8 +304,7 @@
 			$('#txtEmpresa').val(idEmpresa);
 		});
 
-		var tablaProgramacion = $('#tablaProgramacion').DataTable({
-			dom: 'Bfrtip',
+		var tablaProgramacion = $('#tablaProgramacion').DataTable({ 
 			createdRow: function( row ) {
 			    $(row).find('td:eq(0)').css('text-align', 'center');
 			    $(row).find('td:eq(9)').css('text-align', 'center');

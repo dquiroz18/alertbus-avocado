@@ -93,6 +93,51 @@ class ReporteController extends Controller
         ]);
     }
 
+    public function viajesTrabajador(Request $request)
+    {
+        $idEmpresa = $request->get('idEmpresa');
+        if ($idEmpresa != null) {
+            $idEmpresa = $request->get('idEmpresa');
+            $idCentroCosto = $request->get('idCentroCosto');
+            $idTransportista = $request->get('idTransportista');
+            $idRuta = $request->get('idRuta');
+            $idVehiculo = $request->get('idVehiculo');
+            $trabajador = $request->get('trabajador');
+            $desde = $request->get('desde');
+            $hasta = $request->get('hasta');
+
+            $data = DB::select("exec [SP_AlertBus_RPT_Viaje_NombreTrabajador] ?, ?, ?, ?, ?, ?, ?, ?", [$idEmpresa, $idCentroCosto, $idTransportista, $idRuta, $idVehiculo, $trabajador, $desde, $hasta ]);
+            
+            $finalData = [];
+
+            foreach ($data as $key => $row) {
+                $fila = (array)$row;
+                foreach ((array) $row as $key => $value) {
+                    $fila[$key] = strip_tags($value);
+                }
+                array_push($finalData, $fila);
+            }
+
+            return response()->json(['data' => $finalData]);
+        }
+        $empresas = DB::select("exec SP_AlertBus_listEmpresas");
+        $centrocostos = DB::select("exec SP_AlertBus_listCentroCostos");
+        $transportistas = DB::select("exec SP_AlertBus_listTransportistas");
+        $rutas = DB::select("exec SP_AlertBus_listRutas");
+        $tiposViajes = DB::select("exec SP_AlertBus_listTiposViajes");
+        $tiposVehiculos = DB::select("exec SP_AlertBus_listTiposVehiculos");
+        $vehiculos = DB::select("exec SP_AlertBus_Get_Placa");
+        return view('reportes.viajesTrabajador', [
+            'empresas' => $empresas,
+            'centrocostos' => $centrocostos,
+            'transportistas' => $transportistas,
+            'rutas' => $rutas,
+            'tiposViajes' => $tiposViajes,
+            'vehiculos' => $vehiculos,
+            'header' => ['Codigo', 'Documento', 'Sociedad', 'Categoria', 'Area', 'Cargo', 'Fecha Ingreso', 'Nombres', 'Nro Fotocheck', 'Tipo Vehiculo',  'Placa', 'Capacidad',  'Fecha Viaje', 'Origen',  'Destino',  'Paraderos',  'Ruta', 'Precio', 'RUC',  'Transportista']
+        ]);
+    }
+
     public function liquidacion()
     {
     	$empresas = DB::select("exec SP_AlertBus_listEmpresas");

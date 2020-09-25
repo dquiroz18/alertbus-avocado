@@ -3,7 +3,7 @@
 @section('style')
     <style>
         .divtable {
-            overflow-x: scroll;
+             overflow-x: hidden;
             overflow-y: hidden;
             white-space: nowrap;
         }
