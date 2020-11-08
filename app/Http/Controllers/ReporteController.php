@@ -134,7 +134,7 @@ class ReporteController extends Controller
             'rutas' => $rutas,
             'tiposViajes' => $tiposViajes,
             'vehiculos' => $vehiculos,
-            'header' => ['Codigo', 'Documento', 'Sociedad', 'Categoria', 'Area', 'Cargo', 'Fecha Ingreso', 'Nombres', 'Nro Fotocheck', 'Tipo Vehiculo',  'Placa', 'Capacidad',  'Fecha Viaje', 'Origen',  'Destino',  'Paraderos',  'Ruta', 'Precio', 'RUC',  'Transportista']
+            'header' => ['Fecha Viaje', 'Codigo', 'Documento', 'Sociedad', 'Categoria', 'Area', 'Cargo', 'Fecha Ingreso', 'Nombres', 'Nro Fotocheck', 'Marcación', 'Tipo Vehiculo',  'Placa', 'Capacidad',  'Origen',  'Destino',  'Paraderos',  'Ruta', 'Precio', 'RUC',  'Transportista']
         ]);
     }
 

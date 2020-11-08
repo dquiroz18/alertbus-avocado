@@ -132,8 +132,6 @@
 	        ]
 		 });
 		$('#filtrar').click(function () {
-			$('#loading').show();
-			$('#tabla').hide();
 			var idEmpresa = $('#empresa').val();
 			var idCentroCosto = $('#centrocosto').val();
 			var idTransportista = $('#transportista').val();
@@ -183,6 +181,7 @@
 					var data = response.data;
 					for (var i = 0; i < data.length; i++) {
 						tabla.row.add([
+							data[i].FechaViaje,
 							data[i].Codigo,
 							data[i].Documento,
 							data[i].Sociedad,
@@ -192,10 +191,10 @@
 							data[i].FechaIngreso,
 							data[i].Nombres,
 							data[i].NroFotocheck,
+							data[i].HoraMarcacion,
 							data[i].TipoVehiculo, 
 							data[i].Placa,
-							data[i].Capacidad, 
-							data[i].FechaViaje,
+							data[i].Capacidad,
 							data[i].Origen, 
 							data[i].Destino, 
 							data[i].Paraderos, 
@@ -203,11 +202,10 @@
 							data[i].Precio,
 							data[i].RUCProveedor, 
 							data[i].RazonSocial
-						]).draw()
+						])
 						
 					}
-					$('#loading').hide();
-					$('#tabla').show();
+					tabla.draw();
 				}
 			});
 		});
