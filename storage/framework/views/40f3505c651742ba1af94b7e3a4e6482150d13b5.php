@@ -1,7 +1,7 @@
 <?php $__env->startSection('main-content'); ?>
 	<style>
 		.divtable {
-			 overflow-x: hidden;
+			overflow-x: hidden;
 			overflow-y: hidden;
     		white-space: nowrap;
 		}
@@ -17,6 +17,35 @@
 		.select2 {
 			width: 100%;
 		}
+		@media  only screen and (min-width: 320px) and (max-width: 767px) {
+		    #tablaProgramacion tbody {
+		        border: 0;
+		    }
+		    #tablaProgramacion tbody tr {
+		        margin-bottom: 20px !important;
+		        display: block;
+		        border-bottom: 0;
+		    }
+		    #tablaProgramacion tbody td {
+		        display: block;
+		        text-align: left;
+		        font-size: 13px;
+		        border: 0;
+		        max-width: 74vw;
+		    }
+		    #tablaProgramacion tbody td.hasSpacing {
+		        padding-bottom: 20px;
+		    }
+		    #tablaProgramacion tbody td:last-child {
+		        border-bottom: 0;
+		    }
+		    #tablaProgramacion tbody td:before {
+		        content: attr(data-label);
+		        float: left;
+		        text-transform: uppercase;
+		        font-weight: bold;
+		    }
+		}
 	</style>
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<div class="col-sm-12">
@@ -31,14 +60,14 @@
 	       </div>
 	    </div>
 	    <div class="row" id="alert" style="display: none;">
-		    	<div class="col-sm-12">
-		    		<div class="alert alert-success">
-		            	<button type="button" id="alert-close">×</button>
-		            	<h4><i class="icon fa fa-check"></i> Mensaje</h4>
-		            	<span id="alert-message"></span>
-		         	</div>
-		    	</div>
-		    </div>
+	    	<div class="col-xs-12 col-sm-12">
+	    		<div class="alert alert-success">
+	            	<button type="button" id="alert-close">×</button>
+	            	<h4><i class="icon fa fa-check"></i> Mensaje</h4>
+	            	<span id="alert-message"></span>
+	         	</div>
+	    	</div>
+	    </div>
 	    <div class="x_panel">
         	<div class="x_title">
 	            <h2>Programar Viajes</h2>
@@ -49,13 +78,13 @@
           	</div>
         	<div class="x_content">
         		<div class="row">
-        			<div class="form-group col-sm-3">
+        			<div class="col-xs-12 form-group col-sm-3">
         				<label for="empresa">Empresa</label>
 						<select id="empresa" class="form-control">
 						</select>
 						<input type="hidden" name="empresa" id="txtEmpresa">
         			</div>
-        			<div class="form-group col-sm-1">
+        			<div class="col-xs-12 form-group col-sm-1">
         				<label>Programar</label>
         				<br>
 						<button type="button" class="btn btn-info" id="programar">
@@ -64,7 +93,7 @@
         			</div>
         		</div>
         		<div class="row" id="filtros" style="display: none;">
-        			<div class="form-group col-sm-3">
+        			<div class="col-xs-12 form-group col-sm-3">
         				<span>
         					Nro. viajes a programar: <input type="number" width="80px" id="nroFilas" min="0">
         				</span>
@@ -72,8 +101,8 @@
         					<i class="fa fa-check"></i>
         				</button>
         			</div>
-        			<div class="col-sm-7"></div>
-        			<div class="form-group col-sm-2">
+        			<div class="col-xs-12 col-sm-7"></div>
+        			<div class="col-xs-12 form-group col-sm-2">
         				<button type="submit" id="registrar" class="btn btn-success"><i class="fa fa-check"></i> Registrar</button>
         			</div>
         		</div>
@@ -81,14 +110,13 @@
         </div>
         <div class="x_panel">
         	<div class="x_content">
-        		<div class="col-sm-12 divtable">
-        			<table class="table table-striped table-bordered table-condensed" id="tablaProgramacion" style="width: 140vw">
+        		<div class="col-xs-12 col-sm-12 divtable">
+        			<table class="table table-condensed table-bordered" id="tablaProgramacion" style="width: 140vw">
 			            <thead>
 			                <tr>
 			                	<th style="width: 25px;">Nro.</th>
 			                    <th style="width: 70px;">Fecha</th>
 			                    <th style="width: 50px;">Hora</th>
-			                    <!-- <th style="width: 140px;">Area</th> -->
 			                    <th style="width: 150px;">Centro Costo</th>
 			                    <th style="width: 250px;">Transportista</th>
 			                    <th style="width: 150px;">Ruta</th> 
@@ -162,6 +190,11 @@
 			lastPage = info.page;
 		});
 
+		function isMobile(){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+				return true;
+		}
+
 		$(document).ready(function () {
 			for (var i = 0; i < empresas.length; i++) {
                 ("<?php echo e(Auth::user()->idEmpresa); ?>".split('-')).forEach(function(idEmpresa) {
@@ -169,11 +202,11 @@
 						$('#empresa').append('<option value="'+empresas[i].idEmpresa+'">'+empresas[i].razonSocial+'</option>');								
 				});
 			}
-			for (var i = 0; i < transportistas.length; i++) {
-				comboTransportistas.append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
-			}
 			$("#empresa option:first").attr('selected','selected');
 			$('#empresa').trigger('change');
+			if (isMobile()) {
+				$('.divtable').hide();
+			}
 		});
 
 		$('#empresa').change(function () {
@@ -187,6 +220,11 @@
 				if (idEmpresa == centrocostos[i].idEmpresa) {
 					comboCentroCostos.append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
+			}
+			comboTransportistas.html('<option value="0">Seleccione</option>');
+			for (var i = 0; i < transportistas.length; i++) {
+				if (transportistas[i].idEmpresa.includes(idEmpresa))
+					comboTransportistas.append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
 			}
 		});
 
@@ -257,7 +295,7 @@
 				}
 			}
 			//comboTarifas.hide();
-			$(this).parent().next('td').html('');
+			$(this).parent().next('td').find('select').remove();
 			$(this).parent().next('td').append(comboTarifas.prop("outerHTML")).find('select').val(idTarifa);
 			//$(this).parent().next('td').html(comboTarifas.prop("outerHTML"));
 			$(this).parent().next('td').next('td').find('input').remove();
@@ -302,15 +340,24 @@
 			$('#filtros').show();
 			$('#empresa').prop('disabled', true);
 			$('#txtEmpresa').val(idEmpresa);
+			if (isMobile()) {
+				$('#nroFilas').prop('readonly', true);
+				$('#nroFilas').val('1');
+				$('#agregarFilas').trigger('click');
+				$('#agregarFilas').prop('disabled', true);
+			}
 		});
 
-		var tablaProgramacion = $('#tablaProgramacion').DataTable({ 
+		var tablaProgramacion = $('#tablaProgramacion').DataTable({
 			createdRow: function( row ) {
 			    $(row).find('td:eq(0)').css('text-align', 'center');
 			    $(row).find('td:eq(9)').css('text-align', 'center');
 			    $(row).find('.centrocostos').select2();
 			    $(row).find('.transportistas').select2();
 			    $(row).find('.rutas').select2();
+			    $(row).find('.centrocostos').parent().addClass('hasSpacing');
+			    $(row).find('.transportistas').parent().addClass('hasSpacing');
+			    $(row).find('.rutas').parent().addClass('hasSpacing');
 			}
 		});
 		$('#menu_toggle').click();
@@ -320,7 +367,7 @@
 			if (!nroFilas) {
 				nroFilas = 0;
 			}
-			if (nroFilas > 0) {
+			if (nroFilas > 0 && !isMobile()) {
 				for (var i = 0; i < nroFilas; i++) {
 					tablaProgramacion.row.add([
 						(i+1),
@@ -339,6 +386,34 @@
 				}
 				tablaProgramacion.draw(false);
 			}
+			else{
+				tablaProgramacion.row.add([
+					'LLene todos los campos',
+					'<label>Fecha</label><br/>'+
+					inputFecha.prop('outerHTML'),
+					'<label>Hora</label><br/>'+
+					inputHora.prop('outerHTML'),
+					'<label>CentroCosto</label><br/>'+
+					comboCentroCostos.prop('outerHTML'),
+					'<label>Transportista</label><br/>'+
+					comboTransportistas.prop('outerHTML'),
+					'<label>Ruta</label><br/>'+
+					comboRutas.prop('outerHTML'),
+					'<label>T. Vehiculo</label><br/>'+
+					comboTiposVehiculos.prop('outerHTML'),
+					'<label>Tarifa</label><br/>'+
+					comboTarifas.prop('outerHTML'),
+					'<label>Precio</label><br/>'+
+					inputPrecios.prop('outerHTML'),
+					''
+				]);
+				tablaProgramacion.draw(false);
+				$('#tablaProgramacion').find('thead').css('display','none')
+				$('#tablaProgramacion').css('width','75vw')
+				$('.divtable').find('.row:first').hide()
+				$('.divtable').find('.row:last').hide()
+				$('.divtable').show()
+			}
 		});
 
 	$('#nroFilas').keypress(function (e) {
@@ -354,7 +429,7 @@
 			e.preventDefault();
 			hasErrors = false;
 			cCampos = 0;
-			cabecera = ['Nro.', 'Fecha', 'Hora', 'Centro Costo', 'Transportista', 'Ruta' , 'Tipo de Vehículo', 'Tarifa', 'Tarifa Final'];
+			cabecera = ['Nro.', 'Fecha', 'Hora', 'Centro Costo', 'Transportista', 'Ruta' , 'Tipo de Vehículo',];
 
 			var rows = tablaProgramacion.$('tr', {"filter": "applied"});// viewlist is
 
@@ -369,7 +444,7 @@
 						cCampos += 1;
 					}
 				});
-				if (cCampos != 7) {
+				if (cCampos != 5) {
 					$(this).find('td').each( function(columna) {
 						if($(this).find('select').val() == '0' || $(this).find('select').val() == ''){
 							hasErrors = true;

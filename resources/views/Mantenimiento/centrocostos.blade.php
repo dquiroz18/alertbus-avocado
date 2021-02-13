@@ -113,15 +113,15 @@
 	      		<div class="row">
 	      			<div class="form-group col-sm-4">
 	      				<label>Empresa</label>
-	    					<select name="idEmpresa" id="cmbEmpresaM" class="form-control" data-required="1">
-        						@foreach ($empresas as $emp)
-        							@foreach (explode('-', Auth::user()->idEmpresa) as $idEmpresa)
-        								@if ( $idEmpresa == $emp->idEmpresa)
-        									<option value="{{ $emp->idEmpresa }}">{{ $emp->razonSocial }}</option>
-        								@endif	
-        							@endforeach
-        						@endforeach
-	    					</select>
+    					<select name="idEmpresa" id="cmbEmpresaM" class="form-control" data-required="1">
+    						@foreach ($empresas as $emp)
+    							@foreach (explode('-', Auth::user()->idEmpresa) as $idEmpresa)
+    								@if ( $idEmpresa == $emp->idEmpresa)
+    									<option value="{{ $emp->idEmpresa }}">{{ $emp->razonSocial }}</option>
+    								@endif	
+    							@endforeach
+    						@endforeach
+    					</select>
 	      			</div>
 	      		</div>
 	      		<div class="row">

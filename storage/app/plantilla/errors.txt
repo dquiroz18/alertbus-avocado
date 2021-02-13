@@ -1,6 +1,0 @@
-Fila 2: Tarifa no configurada para esa Ruta - Tipo Vehículo
-Fila 3: Programación ya existe para ese Conductor
-Fila 4: Programación ya existe para ese Conductor
-Fila 5: Tarifa no configurada para esa Ruta - Tipo Vehículo
-Fila 6: Programación ya existe para ese Conductor
-Fila 7: Tarifa no configurada para esa Ruta - Tipo Vehículo

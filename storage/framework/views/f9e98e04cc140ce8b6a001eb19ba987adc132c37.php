@@ -76,12 +76,33 @@
 			$('#empresa').trigger('change');
 		});
 
+		var cecos = <?php echo json_encode($centrocostos); ?>;
+
 		$('#empresa').change(function () {
 			$('#centrocosto').html('<option value="0">Seleccione</option>');
 			var idEmpresa = $(this).val();
-			data = getModelByParams({idEmpresa: idEmpresa}, "<?php echo e(url('mantenimiento/centro-costos/listar')); ?>", 'GET');
 			var select = $('#centrocosto');
-	  		listarOnSelect(2, 4, data, select);
+	  		listarOnSelect(2, 4, cecos, select);
+
+	  		$('#transportista').html('<option value="0">Seleccione</option>');
+	  		for (var i = 0; i < transportistas.length; i++) {
+	  			if (transportistas[i].idEmpresa.includes(idEmpresa)){
+					<?php if(Auth::user()->tipo=='T'): ?>
+						var idTransportista = <?php echo e(Auth::user()->idProveedor); ?>;
+						if (idTransportista == transportistas[i].idProveedor) {
+							$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+						}
+					<?php else: ?>
+						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');	
+					<?php endif; ?>
+				}
+			}
+			<?php if(Auth::user()->tipo=='T'): ?>
+				$("#transportista").val($("#transportista option:eq(1)").val());
+				$("#transportistaE").val($("#transportistaE option:eq(1)").val());
+				$('#transportista').trigger('change');
+				$('#transportistaE').trigger('change');
+			<?php endif; ?>
 		});
 
 		$('#transportista').change(function () {

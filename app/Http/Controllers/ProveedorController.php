@@ -9,12 +9,13 @@ class ProveedorController extends Controller
 {
     public function index()
     {
-        return view('Mantenimiento.proveedores');
+        $empresas = DB::select("exec SP_AlertBus_listEmpresas");
+        return view('Mantenimiento.proveedores', ['empresas' => $empresas]);
     }
 
-    public function listar()
+    public function listar(Request $request)
     {
-        return response()->json(['data' => DB::select("exec [SP_AlertBus_listTransportistas]")]);
+        return response()->json(['data' => DB::select("exec [SP_AlertBus_listTransportistas] ?", [ $request->get('idEmpresa')] )]);
     }
 
     public function sincronizacion_sap()
@@ -72,11 +73,15 @@ class ProveedorController extends Controller
             $accion = 1;
         }
 
+        $idEmpresa = $request->get('idEmpresa');
+        if (is_array($idEmpresa)) {
+            $idEmpresa = implode('-', $idEmpresa);
+        }
         $codigo = $request->get('codigo');
         $descripcion = $request->get('descripcion');
         $ruc = $request->get('ruc');
 
-        $insert = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?', [$accion, $proveedor, $ruc, $descripcion, Auth::user()->usuario]);
+        $insert = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?, ?', [$accion, $proveedor, $ruc, $descripcion, Auth::user()->usuario, $idEmpresa]);
 
         return response()->json(['message' => substr($insert[0]->exito, 2), 'success' => substr($insert[0]->exito, 0, 1)]);
     }
@@ -85,7 +90,7 @@ class ProveedorController extends Controller
     {
         $proveedor = $request->get('id');
 
-        $delete = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?', [4, $proveedor, 0, '',  Auth::user()->usuario]);
+        $delete = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?, ?', [4, $proveedor, 0, '', Auth::user()->usuario, '']);
 
         return response()->json(['message' => substr($delete[0]->exito, 2), 'success' => substr($delete[0]->exito, 0, 1)]);
     }
@@ -93,7 +98,7 @@ class ProveedorController extends Controller
     public function show(Request $request)
     {
         $id = $request->get('idProveedor');
-        $proveedor = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?', [2, $id, 0, '', Auth::user()->usuario]);
+        $proveedor = DB::select('exec [SP_AlertBus_CRUD_proveedor] ?, ?, ?, ?, ?, ?', [2, $id, 0, '', Auth::user()->usuario, '']);
         return response()->json(['data' => $proveedor[0]]);   
     }
 

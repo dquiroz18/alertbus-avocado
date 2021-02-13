@@ -111,15 +111,15 @@
 	      		<div class="row">
 	      			<div class="form-group col-sm-4">
 	      				<label>Empresa</label>
-	    					<select name="idEmpresa" id="cmbEmpresaM" class="form-control" data-required="1">
-        						<?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        							<?php $__currentLoopData = explode('-', Auth::user()->idEmpresa); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idEmpresa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        								<?php if( $idEmpresa == $emp->idEmpresa): ?>
-        									<option value="<?php echo e($emp->idEmpresa); ?>"><?php echo e($emp->razonSocial); ?></option>
-        								<?php endif; ?>	
-        							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-	    					</select>
+    					<select name="idEmpresa" id="cmbEmpresaM" class="form-control" data-required="1">
+    						<?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    							<?php $__currentLoopData = explode('-', Auth::user()->idEmpresa); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idEmpresa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    								<?php if( $idEmpresa == $emp->idEmpresa): ?>
+    									<option value="<?php echo e($emp->idEmpresa); ?>"><?php echo e($emp->razonSocial); ?></option>
+    								<?php endif; ?>	
+    							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    					</select>
 	      			</div>
 	      		</div>
 	      		<div class="row">

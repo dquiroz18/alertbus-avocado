@@ -44,7 +44,16 @@ class UsuarioMovilController extends Controller
     {
     	$id = $request->get('id');
 
-    	$insert = DB::select('exec [SP_AlertBus_CRUD_UsuarioMovil] ?, ?, ?, ?, ?, ?', [4, $id, '', '', '', Auth::user()->usuario]);
+    	$insert = DB::select('exec [SP_AlertBus_CRUD_UsuarioMovil] ?, ?, ?, ?, ?, ?', [5, $id, '', '', '', Auth::user()->usuario]);
+
+        return response()->json(['message' => substr($insert[0]->exito, 2), 'success' => substr($insert[0]->exito, 0, 1)]);
+    }
+
+    public function restaurar(Request $request)
+    {
+        $id = $request->get('id');
+
+        $insert = DB::select('exec [SP_AlertBus_CRUD_UsuarioMovil] ?, ?, ?, ?, ?, ?', [5, $id, '', '', '', Auth::user()->usuario]);
 
         return response()->json(['message' => substr($insert[0]->exito, 2), 'success' => substr($insert[0]->exito, 0, 1)]);
     }

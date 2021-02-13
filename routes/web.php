@@ -31,7 +31,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::get('usuarios/movil', 'UsuarioMovilController@create');	
 	Route::post('usuarios/movil/guardar', 'UsuarioMovilController@store');	
-	Route::post('usuarios/movil/eliminar', 'UsuarioMovilController@delete');	
+	Route::post('usuarios/movil/eliminar', 'UsuarioMovilController@delete');
+	Route::post('usuarios/movil/restaurar', 'UsuarioMovilController@restaurar');
 	Route::post('usuarios/movil/listar', 'UsuarioMovilController@listar');	
 	Route::post('usuarios/movil/manual', 'UsuarioMovilController@manual');
 

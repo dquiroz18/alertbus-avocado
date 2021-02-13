@@ -544,9 +544,7 @@
 						$('#empresa').append('<option value="'+empresas[i].idEmpresa+'">'+empresas[i].razonSocial+'</option>');								
 				});
 			}
-			for (var i = 0; i < transportistas.length; i++) {
-				$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
-			}
+			
 
 			$('#empresa').val(cabecera[0].idEmpresa);
 			$('#empresa').trigger('change');
@@ -576,6 +574,13 @@
 					$('#centrocosto').append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
 			}
+
+			$('#transportista').html('<option value="0">Seleccione</option>');
+			for (var i = 0; i < transportistas.length; i++) {
+				if (transportistas[i].idEmpresa.includes(idEmpresa))
+					$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+			}
+
 		});
 
 		$('#transportista').change(function () {

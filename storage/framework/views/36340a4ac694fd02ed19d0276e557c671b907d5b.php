@@ -29,7 +29,7 @@
 		        	<div class="x_title">
 		        		<h3>Listado de Tarifas</h3>
 		        		<div class="row">
-		        			<div class="col-sm-4" style="display: none;">
+		        			<div class="col-sm-4">
 		        				<div class="form-group">
 		        					<label>Transportista</label>
 		        					<select id="cmbTransportista" class="form-control">
@@ -44,7 +44,7 @@
 		        			</div>
 		        			<div class="col-sm-2">
 		        				<br>
-										<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
+								<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
 		        			</div>
 		        			<div class="clearfix"></div>
 		        			<div class="col-sm-4" id="showNewTarifa">

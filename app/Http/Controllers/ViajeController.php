@@ -186,16 +186,13 @@ class ViajeController extends Controller
                 !is_null($centrocostos[$i]) &&
     			!is_null($transportistas[$i]) &&
                 !is_null($rutas[$i]) &&
-    			!is_null($tiposVehiculos[$i]) &&
-    			!is_null($tarifas[$i])
+    			!is_null($tiposVehiculos[$i])
     		) {
 
                 if ($centrocostos[$i] == '0' ||
                     $transportistas[$i] == '0' ||
                     $rutas[$i] == '0' ||
-                    $tiposVehiculos[$i] == '0' ||
-                    $tarifas[$i] == '0' ||
-                    $precios[$i] == '0'
+                    $tiposVehiculos[$i] == '0'
                 ) {
                     continue;
                 }

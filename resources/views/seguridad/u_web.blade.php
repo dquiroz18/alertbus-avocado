@@ -170,6 +170,11 @@
 			dropdownParent: $('#new')
 		});
 		$('#cmbEmpresa').select2();
+		var lastPage = 0;
+		$('#tbl_data').on( 'page.dt', function () {
+			var info = t.page.info();
+			lastPage = info.page;
+		});
 		function listarUsuarios() {
 			$.ajaxSetup({
 		      headers: {

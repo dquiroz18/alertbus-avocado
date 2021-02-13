@@ -138,7 +138,7 @@
 	      		<div class="row">
 		            <div class="form-group col-sm-4">
 		              <label for="txtCode">Código</label>
-		              <input type="text" class="form-control" id="txtCodigo" maxlength="12" name="codigo" required>
+		              <input type="text" class="form-control" id="txtCodigo" maxlength="12" name="codigo" >
 		            </div>
 		      	</div>
 		      	<div class="row">

@@ -358,25 +358,6 @@
 				$("#empresaE option:first").attr('selected','selected');
 				$('#empresaE').trigger('change');
 			}
-			for (var i = 0; i < transportistas.length; i++) {
-				@if (Auth::user()->tipo=='T')
-					var idTransportista = {{ Auth::user()->idProveedor }};
-					if (idTransportista == transportistas[i].idProveedor) {
-						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
-						$('#transportistaE').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');		
-					}
-				@else
-					$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
-					$('#transportistaE').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');	
-				@endif
-				
-			}
-			@if (Auth::user()->tipo=='T')
-				$("#transportista").val($("#transportista option:eq(1)").val());
-				$("#transportistaE").val($("#transportistaE option:eq(1)").val());
-				$('#transportista').trigger('change');
-				$('#transportistaE').trigger('change');
-			@endif
 		});
 
 		$('#empresa').change(function () {
@@ -387,6 +368,23 @@
 					$('#centrocosto').append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
 			}
+			$('#transportista').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
+			for (var i = 0; i < transportistas.length; i++) {
+				if (transportistas[i].idEmpresa.includes(idEmpresa)){
+				@if (Auth::user()->tipo=='T')
+					var idTransportista = {{ Auth::user()->idProveedor }};
+					if (idTransportista == transportistas[i].idProveedor) {
+						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+					}
+				@else
+					$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+				@endif
+				}
+			}
+			@if (Auth::user()->tipo=='T')
+				$("#transportista").val($("#transportista option:eq(1)").val());
+				$('#transportista').trigger('change');
+			@endif
 		});
 
 		$('#empresaE').change(function () {
@@ -403,6 +401,23 @@
 					$('#areaE').append('<option value="'+areas[i].idArea+'">'+areas[i].nombreArea+'</option>');
 				}
 			}*/
+			$('#transportistaE').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
+			for (var i = 0; i < transportistas.length; i++) {
+				if (transportistas[i].idEmpresa.includes(idEmpresa)){
+				@if (Auth::user()->tipo=='T')
+					var idTransportista = {{ Auth::user()->idProveedor }};
+					if (idTransportista == transportistas[i].idProveedor) {
+						$('#transportistaE').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+					}
+				@else
+					$('#transportistaE').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+				@endif
+				}
+			}
+			@if (Auth::user()->tipo=='T')
+				$("#transportistaE").val($("#transportistaE option:eq(1)").val());
+				$('#transportistaE').trigger('change');
+			@endif
 		});
 
 		$('#transportista').change(function () {
@@ -732,8 +747,6 @@
 			if ($('#transportistaE').val() == '0') {alert("Seleccione un Transportista"); return false;}
 			if ($('#rutaE').val() == '0') {alert("Seleccione una Ruta"); return false;}
 			if ($('#tipoVehiculoE').val() == '0') {alert("Seleccione un Tipo de Vehiculo"); return false;}
-			if ($('#tarifaE').val() == '0') {alert("Seleccione una Tarifa"); return false;}
-			if ($('#precio_finalE').val() == '0') {alert("Inserte un Precio Final valido"); return false;}
 			$('#idPlanificacionE').val(modal_idPlanificacion);
 			var data = $(this).serialize();
 			console.log(data);

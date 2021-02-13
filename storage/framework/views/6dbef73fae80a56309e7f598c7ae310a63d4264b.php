@@ -47,7 +47,7 @@
 				                	<th width="150px">Usuario</th>
 				                	<th width="300px">Conductor</th>
 				                    <th width="80px">Editar</th>
-				                    <th width="80px">Eliminar</th>
+				                    <th width="80px">Desactivar/Activar</th>
 				                </tr>
 				            </thead>
 				        </table>
@@ -64,18 +64,42 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	       	<h3 class="modal-title" style="color: red; font-weight: bold;">Eliminar Usuario</h3>
+	       	<h3 class="modal-title" style="color: red; font-weight: bold;">Desactivar Usuario</h3>
 	      </div>
 	      <form id="frm_delete">
 	      	<input type="hidden" name="id" id="txtIdE">
 	      <div class="modal-body">
 	        <p>
-	        	¿ Desea Eliminar el Usuario ?
+	        	¿ Desea Desactivar el Usuario ?
 	        </p>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        <button type="submit" id="btn-delete" class="btn btn-danger">Eliminar</button>
+	        <button type="submit" id="btn-delete" class="btn btn-danger">Desactivar</button>
+	       </form>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- delete U Web -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="restaurar">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	       	<h3 class="modal-title" style="color: green; font-weight: bold;">Activar Usuario</h3>
+	      </div>
+	      <form id="frm_restaurar">
+	      	<input type="hidden" name="id" id="txtIdR">
+	      <div class="modal-body">
+	        <p>
+	        	¿ Desea Activar el Usuario ?
+	        </p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        <button type="submit" id="btn-restaurar" class="btn btn-success">Activar</button>
 	       </form>
 	      </div>
 	    </div><!-- /.modal-content -->
@@ -156,11 +180,16 @@
 					var filas = response.data;
 					t.clear().draw();
 					for (var i = 0; i < filas.length; i++) {
+						var button = '<button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger delete" data-idusuario="'+filas[i].idUsuarioMovil+'"><i class="fa fa-remove"></i></button>';
+						if (filas[i].estado == 0){
+							button = '<button type="button" data-toggle="modal" data-target="#restaurar" class="btn btn-success restaurar" data-idusuario="'+filas[i].idUsuarioMovil+'"><i class="fa fa-check"></i></button>'
+						}
+
 						t.row.add([
 							filas[i].nombreUsuario,
 							filas[i].nombreConductor,
 							'<button type="button" data-toggle="modal" data-target="#new" class="btn btn-warning edit" data-idusuario="'+filas[i].idUsuarioMovil+'" data-idconductor="'+filas[i].idConductor+'" data-nombretrabajador="'+filas[i].nombreConductor+'" data-usuario="'+filas[i].nombreUsuario+'" ><i class="fa fa-edit"></i></button>',
-							'<button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger delete" data-idusuario="'+filas[i].idUsuarioMovil+'"><i class="fa fa-remove"></i></button>'
+							button
 						]).draw();
 						t.page.info();
 						t.page(lastPage).draw('page');
@@ -203,6 +232,9 @@
 
 	    $('#tbl_data').on('click', '.delete', function(){
 	    	$('#txtIdE').val($(this).data('idusuario'));
+	    });
+	    $('#tbl_data').on('click', '.restaurar', function(){
+	    	$('#txtIdR').val($(this).data('idusuario'));
 	    });
 	    $('#nombreTrabajador').keyup(function() {
 			var string = $(this).val();
@@ -290,6 +322,34 @@
 					$('#alert-message').text(rpt_message);
 					$('#alert').show();
 					$('#delete').modal('hide');
+					listarUsuarios()
+				},
+				error: function(xmlhttprequest, textstatus, message){
+					if (textstatus) {
+						fundos = [];	
+					}
+				}
+			});
+	    });
+
+	    $('#frm_restaurar').submit(function(e) {
+	    	e.preventDefault();
+	    	var data = $(this).serialize();
+	    	$.ajaxSetup({
+		      headers: {
+		          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		      }
+		    });
+
+			$.ajax({
+				url: "<?php echo e(url('usuarios/movil/restaurar')); ?>",
+				method: 'post',
+				data: data,
+				success: function(response){
+					var rpt_message = response.message;
+					$('#alert-message').text(rpt_message);
+					$('#alert').show();
+					$('#restaurar').modal('hide');
 					listarUsuarios()
 				},
 				error: function(xmlhttprequest, textstatus, message){

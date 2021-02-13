@@ -94,6 +94,26 @@
 					$('#centrocosto').append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
 			}
+
+			$('#transportista').html('<option value="0">Seleccione</option>');
+	  		for (var i = 0; i < transportistas.length; i++) {
+	  			if (transportistas[i].idEmpresa.includes(idEmpresa)){
+					<?php if(Auth::user()->tipo=='T'): ?>
+						var idTransportista = <?php echo e(Auth::user()->idProveedor); ?>;
+						if (idTransportista == transportistas[i].idProveedor) {
+							$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+						}
+					<?php else: ?>
+						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');	
+					<?php endif; ?>
+				}
+			}
+			<?php if(Auth::user()->tipo=='T'): ?>
+				$("#transportista").val($("#transportista option:eq(1)").val());
+				$("#transportistaE").val($("#transportistaE option:eq(1)").val());
+				$('#transportista').trigger('change');
+				$('#transportistaE').trigger('change');
+			<?php endif; ?>
 		});
 
 		$('#transportista').change(function () {

@@ -29,12 +29,25 @@
 		        	<div class="x_title">
 		        		<h3>Listado de Transportistas</h3>
 		        		<div class="row">
+		        			<div class="col-sm-4">
+		        				<label for="cmbEmpresa">Empresa</label>
+		        				<select id="cmbEmpresa" class="form-control">
+		        					<?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		    							<?php $__currentLoopData = explode('-', Auth::user()->idEmpresa); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idEmpresa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		    								<?php if( $idEmpresa == $emp->idEmpresa): ?>
+		    									<option value="<?php echo e($emp->idEmpresa); ?>"><?php echo e($emp->razonSocial); ?></option>
+		    								<?php endif; ?>	
+		    							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+		    						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+		        				</select>
+		        			</div>
 		        			<div class="col-sm-2">
 		        				<br>
 								<button type="button" id="buscar" class="btn btn-primary"><i class="fa fa-search"></i> Filtrar</button>
 		        			</div>
 		        			<div class="clearfix"></div>
-		        				<div class="col-sm-4" id="showNewProveedor">
+		        			<br>
+		        			<div class="col-sm-4" id="showNewProveedor">
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new"><i class="fa fa-plus"></i> Agregar Transportista</button>
 		        			</div>
 		        			
@@ -45,7 +58,6 @@
 				        <table class="table table-hover table-striped table-bordered" id="tableManagment">
 				            <thead>
 				                <tr>
-				                	<!-- <th>Codigo</th> -->
 				                    <th>RUC</th>
 				                    <th>Razón Social</th>
 				                    <th width="80px">Ver/Editar</th>
@@ -96,6 +108,20 @@
 	      	<form>
 	      		<input type="hidden" name="id" id="txtIdN">
 	      		<div class="row">
+	      			<div class="form-group col-sm-12">
+	      				<label>Empresa</label>
+    					<select name="idEmpresa[]" id="cmbEmpresaM" class="form-control" required multiple="multiple" style="width: 100%">
+    						<?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    							<?php $__currentLoopData = explode('-', Auth::user()->idEmpresa); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idEmpresa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    								<?php if( $idEmpresa == $emp->idEmpresa): ?>
+    									<option value="<?php echo e($emp->idEmpresa); ?>"><?php echo e($emp->razonSocial); ?></option>
+    								<?php endif; ?>	
+    							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    					</select>
+	      			</div>
+	      		</div>
+	      		<div class="row">
 		            <div class="form-group col-sm-4">
 		              <label for="txtRuc">RUC</label>
 		              <input type="number" class="form-control" id="txtRuc" maxlength="11" max="99999999999" name="ruc" required>
@@ -129,6 +155,11 @@
 	</script>
 	<?php echo $__env->make('helpers.dataManagment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<script>
+
+		$('#cmbEmpresaM').select2({
+			dropDownParent: '#new'
+		})
+
 		$('#txtRuc').keyup(function() {
 			var string = $(this).val();
 			if (string.length > 11) {
@@ -138,13 +169,21 @@
 		});
 		$('#buscar').click(function() {
 	  	var o_id = $(this).parent().prev().find('select').val();
-	  	data = getModelByParams({}, "<?php echo e(url('mantenimiento/proveedores/listar')); ?>", 'GET');
-	  	listarOnTable(0, 2, data, [0], true, true, false);
+	  	data = getModelByParams({idEmpresa: o_id}, "<?php echo e(url('mantenimiento/proveedores/listar')); ?>", 'GET');
+	  	listarOnTable(0, 2, data, [0, 3], true, true, false);
 	  });
 
 		$('#new').on('show.bs.modal', function() {
 			if (id != 0) {
 				var model = getModelByParams({idProveedor: id}, "<?php echo e(url('mantenimiento/proveedor')); ?>", 'GET');
+				var ff = model.idEmpresa;
+		    	if(ff != undefined || ff != null){
+			    	var fs = ff;
+			    	if (fs.length > 1) {
+			    		ff = fs.split('-')	
+			    	}
+		    	}
+				$('#cmbEmpresaM').val(ff).trigger('change');
 				$('#txtRuc').val(model.numeroRuc);
 				$('#txtCodigo').val(model.codigoProveedor);
 				$('#txtNombre').val(model.razonSocial);
@@ -152,6 +191,7 @@
 			}
 			else {
 				$('#new form').trigger('reset');
+				$('#cmbEmpresaM').val('').trigger('change');
 				$('#txtIdN').val('');
 			}
 		});

@@ -74,22 +74,6 @@
 						$('#empresa').append('<option value="'+empresas[i].idEmpresa+'">'+empresas[i].razonSocial+'</option>');								
 				});
 			}
-			for (var i = 0; i < transportistas.length; i++) {
-				@if (Auth::user()->tipo=='T')
-					var idTransportista = {{ Auth::user()->idProveedor }};
-					if (idTransportista == transportistas[i].idProveedor) {
-						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
-					}
-				@else
-					$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');	
-				@endif
-			}
-			@if (Auth::user()->tipo=='T')
-				$("#transportista").val($("#transportista option:eq(1)").val());
-				$("#transportistaE").val($("#transportistaE option:eq(1)").val());
-				$('#transportista').trigger('change');
-				$('#transportistaE').trigger('change');
-			@endif
 			$("#empresa option:first").attr('selected','selected');
 			$('#empresa').trigger('change');
 		});
@@ -102,6 +86,26 @@
 					$('#centrocosto').append('<option value="'+centrocostos[i].idCentroCosto+'">'+centrocostos[i].nombreCentroCosto+'</option>');
 				}
 			}
+
+			$('#transportista').find('option').remove().end().append('<option value="0">Seleccione</option>').val('0');
+
+			for (var i = 0; i < transportistas.length; i++) {
+				if (transportistas[i].idEmpresa.includes(idEmpresa)){
+					@if (Auth::user()->tipo=='T')
+						var idTransportista = {{ Auth::user()->idProveedor }};
+						if (idTransportista == transportistas[i].idProveedor) {
+							$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');
+						}
+					@else
+						$('#transportista').append('<option value="'+transportistas[i].idProveedor+'">'+transportistas[i].razonSocial+'</option>');	
+					@endif
+				}
+			}
+			@if (Auth::user()->tipo=='T')
+				$("#transportista").val($("#transportista option:eq(1)").val());
+				$('#transportista').trigger('change');
+			@endif
+
 		});
 
 		$('#transportista').change(function () {
