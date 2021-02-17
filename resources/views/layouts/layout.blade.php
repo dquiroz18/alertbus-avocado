@@ -108,8 +108,10 @@
 					            <li id="programados_viajes"><a href="{{ url('viajes/programados') }}">Viajes Programados</a></li>
                       <li id="reporte_personal"><a href="{{ url('reportes/viajes') }}">Viajes Realizados</a></li>
                       <!-- <li id="reporte_personal"><a href="{{ url('reportes/viaje-personal') }}">Manifiesto</a></li> -->
+                    @if (Auth::user()->tipo=='E' || Auth::user()->tipo=='A')        
                      <li id="reporte_personal"><a href="{{ url('reportes/viajes-por-trabajador') }}">Viajes por Trabajador</a></li>
 					           <li id="reporte_personal"><a href="{{ url('reportes/viajes-liquidacion') }}">Liquidación</a></li>
+                    @endif
                     </ul>
                   </li>
                   @if (Auth::user()->tipo=='E' || Auth::user()->tipo=='A')        

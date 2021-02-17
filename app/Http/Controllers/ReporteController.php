@@ -50,7 +50,7 @@ class ReporteController extends Controller
             'rutas' => $rutas,
             'tiposViajes' => $tiposViajes,
             'vehiculos' => $vehiculos,
-            'header' => ['Ver Detalle','Ver Tracking','Manifiesto','Empresa','Fecha','Centro Costo','Transportista','Ruta','Tipo Vehículo','Tarifa','Conductor','Placa','Hora Inicio','Hora Fin','Duración','Cant. Pasajeros', '% Ocupación']
+            'header' => ['Ver Detalle','Ver Tracking','Manifiesto','Empresa','Fecha','Centro Costo','Transportista','Origen','Ruta','Tipo Vehículo','Tarifa','Conductor','Placa','Hora Inicio','Hora Fin','Duración','Cant. Pasajeros', '% Ocupación']
         ]);
     }
 

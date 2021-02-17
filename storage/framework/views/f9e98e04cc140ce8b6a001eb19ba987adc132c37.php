@@ -213,6 +213,7 @@
 					//data[i].nombreArea,
 					data[i].nombreCentroCosto,
 					data[i].nombreProveedor,
+					data[i].origen,
 					data[i].nombreRuta,
 					data[i].nombreTipoVehiculo,
 					//data[i].nombreTipoTarifa,

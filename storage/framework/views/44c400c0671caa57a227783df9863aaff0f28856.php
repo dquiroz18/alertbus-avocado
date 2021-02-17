@@ -108,8 +108,10 @@
 					            <li id="programados_viajes"><a href="<?php echo e(url('viajes/programados')); ?>">Viajes Programados</a></li>
                       <li id="reporte_personal"><a href="<?php echo e(url('reportes/viajes')); ?>">Viajes Realizados</a></li>
                       <!-- <li id="reporte_personal"><a href="<?php echo e(url('reportes/viaje-personal')); ?>">Manifiesto</a></li> -->
+                    <?php if(Auth::user()->tipo=='E' || Auth::user()->tipo=='A'): ?>        
                      <li id="reporte_personal"><a href="<?php echo e(url('reportes/viajes-por-trabajador')); ?>">Viajes por Trabajador</a></li>
 					           <li id="reporte_personal"><a href="<?php echo e(url('reportes/viajes-liquidacion')); ?>">Liquidación</a></li>
+                    <?php endif; ?>
                     </ul>
                   </li>
                   <?php if(Auth::user()->tipo=='E' || Auth::user()->tipo=='A'): ?>        
